@@ -1,6 +1,6 @@
 import 'package:arc_progress_bar_new/arc_progress_bar_new.dart';
 import 'package:bmi/imageModel/custom.dart';
-import 'package:bmi/widgets/slider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

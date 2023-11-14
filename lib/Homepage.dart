@@ -1,3 +1,4 @@
+import 'package:arc_progress_bar_new/arc_progress_bar_new.dart';
 import 'package:bmi/imageModel/custom.dart';
 import 'package:bmi/widgets/slider.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +181,95 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () {}, child: const Text("Calculate"))),
+                          onPressed: () {
+                            var userBmi = userWeight /
+                                ((userHeight / 100) * (userHeight / 100));
+
+                            String result;
+                            Widget calculateBmi() {
+                              if (userBmi < 18.5) {
+                                return Text(
+                                  'Underweight',
+                                  style: GoogleFonts.jacquesFrancois(
+                                      color: Colors.red,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              } else if (userBmi >= 18.5 && userBmi <= 24.9) {
+                                return Text(
+                                  'Normal Weight',
+                                  style: GoogleFonts.jacquesFrancois(
+                                      color: Colors.green, fontSize: 30),
+                                );
+                              } else if (userBmi > 24.9 && userBmi <= 29.9) {
+                                return Text(
+                                  'Over Weight',
+                                  style: GoogleFonts.jacquesFrancois(
+                                      color: Colors.red, fontSize: 30),
+                                );
+                              } else {
+                                return Text(
+                                  'Obese',
+                                  style: GoogleFonts.jacquesFrancois(
+                                      color: Colors.red, fontSize: 30),
+                                );
+                              }
+                            }
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  actions: [
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                            height: 300,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Center(child: calculateBmi()),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Center(
+                                                  child: SizedBox(
+                                                      // color: Colors.red,
+                                                      height: 200,
+                                                      width: 200,
+                                                      child: ArcProgressBar(
+                                                        handleSize: 0,
+                                                        animateFromLastPercent:
+                                                            false,
+                                                        percentage: userBmi * 2,
+                                                        centerWidget: Text(
+                                                            userBmi
+                                                                .toStringAsFixed(
+                                                                    2)),
+                                                        arcThickness: 30,
+                                                        strokeCap:
+                                                            StrokeCap.square,
+                                                        bottomLeftWidget:
+                                                            const Text(
+                                                                "UnderWeight"),
+                                                        bottomRightWidget:
+                                                            const Text(
+                                                                "OverWeight"),
+                                                      )),
+                                                )
+                                              ],
+                                            )),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text("Calculate"))),
                 )
               ],
             ),

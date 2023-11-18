@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 double userHeight = 40;
 double userAge = 18;
 double userWeight = 50;
+
 List<bool> selected = <bool>[true, false];
 List<Widget> gender = <Widget>[
   const Text("Male"),
@@ -89,18 +90,31 @@ class _HomePageState extends State<HomePage> {
                       quarterTurns: -1,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.height / 2,
-                        child: Slider(
-                          min: 40,
-                          max: 250,
-                          divisions: 250,
-                          label: userHeight.round().toString(),
-                          value: userHeight,
-                          onChanged: (double value) {
-                            setState(() {
-                              userHeight = value;
-                            });
-                          },
-                          activeColor: Colors.black,
+                        child: Column(
+                          children: [
+                            Slider(
+                              min: 40,
+                              max: 250,
+                              divisions: 250,
+                              label: userHeight.round().toString(),
+                              value: userHeight,
+                              onChanged: (double value) {
+                                setState(() {
+                                  userHeight = value;
+                                });
+                              },
+                              activeColor: Colors.black,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [Text("40"), Text("250")],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -126,18 +140,37 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
-                        child: Slider(
-                          min: 0,
-                          max: 100,
-                          divisions: 100,
-                          label: userAge.round().toString(),
-                          value: userAge,
-                          onChanged: (double value) {
-                            setState(() {
-                              userAge = value;
-                            });
-                          },
-                          activeColor: Colors.black,
+                        child: Column(
+                          children: [
+                            Slider(
+                              min: 0,
+                              max: 100,
+                              divisions: 100,
+                              label: userAge.round().toString(),
+                              value: userAge,
+                              onChanged: (double value) {
+                                setState(() {
+                                  userAge = value;
+                                });
+                              },
+                              activeColor: Colors.black,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("0"),
+                                  Text("25"),
+                                  Text("50"),
+                                  Text("75"),
+                                  Text("100")
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ],
@@ -158,18 +191,37 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
-                        child: Slider(
-                          min: 1,
-                          max: 200,
-                          divisions: 100,
-                          label: userWeight.round().toString(),
-                          value: userWeight,
-                          onChanged: (double value) {
-                            setState(() {
-                              userWeight = value;
-                            });
-                          },
-                          activeColor: Colors.black,
+                        child: Column(
+                          children: [
+                            Slider(
+                              min: 1,
+                              max: 200,
+                              divisions: 100,
+                              label: userWeight.round().toString(),
+                              value: userWeight,
+                              onChanged: (double value) {
+                                setState(() {
+                                  userWeight = value;
+                                });
+                              },
+                              activeColor: Colors.black,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("0"),
+                                  Text("50"),
+                                  Text("100"),
+                                  Text("150"),
+                                  Text("200")
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ],
@@ -181,11 +233,17 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width,
                       height: 50,
                       child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal),
                           onPressed: () {
                             var userBmi = userWeight /
                                 ((userHeight / 100) * (userHeight / 100));
 
                             String result;
+                            Color CirColor = userBmi > 18.5 && userBmi < 24.9
+                                ? Colors.green
+                                : Colors.red;
+
                             Widget calculateBmi() {
                               if (userBmi < 18.5) {
                                 return Text(
@@ -226,10 +284,10 @@ class _HomePageState extends State<HomePage> {
                                         SizedBox(
                                             height: 300,
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              // mainAxisAlignment:
+                                              //     MainAxisAlignment.center,
+                                              // crossAxisAlignment:
+                                              //     CrossAxisAlignment.center,
                                               children: [
                                                 Center(child: calculateBmi()),
                                                 const SizedBox(
@@ -246,18 +304,38 @@ class _HomePageState extends State<HomePage> {
                                                             false,
                                                         percentage: userBmi * 2,
                                                         centerWidget: Text(
-                                                            userBmi
-                                                                .toStringAsFixed(
-                                                                    2)),
+                                                          "Your BMI ${userBmi.toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              color: CirColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                         arcThickness: 30,
+                                                        foregroundColor:
+                                                            CirColor,
                                                         strokeCap:
                                                             StrokeCap.square,
                                                         bottomLeftWidget:
                                                             const Text(
-                                                                "UnderWeight"),
+                                                          "UnderWeight",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
                                                         bottomRightWidget:
                                                             const Text(
-                                                                "OverWeight"),
+                                                          "OverWeight",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
                                                       )),
                                                 )
                                               ],
